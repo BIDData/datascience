@@ -2,7 +2,10 @@
 
 In this lab you will use UNIX command line utilities to do some data cleaning
 and basic analysis. At the end of the exercise, remember to fill out the
-response form at http://goo.gl/VPhVGW .
+response form [here](https://docs.google.com/a/berkeley.edu/forms/d/1YIAinKy7FfOU7oDyg1z0JCBJqDR94WuM2Yzz59fRjKo/viewform).
+
+For all the utilities mentioned in this lab, you can read its manual by
+running `man _command-name_` from a terminal.
 
 ## Section 1: File System Analytics
 
@@ -64,7 +67,7 @@ should be sorted.
 ### Exercises
 1.1. What are the 10 biggest directories at depth 1 in /usr/lib on your virtual machine?
 
-1.2. What are the 5 biggest directories in /home/saasbook, including hidden folders?
+1.2. What are the 5 biggest directories in /home/datascience, including hidden folders?
 
 ## Section 2: Log processing with command line tools
 
@@ -85,12 +88,15 @@ on most UNIX machines and should be installed in your VM. To download a file
 using curl you need to run `curl <url> -o <filename>`. For example to download
 the course webpage in html you can run something like
 
-    curl http://amplab.github.io/datascience-sp14/index.html -o index.html
+    curl http://biddata.github.io/datascience-fa14/index.html -o index.html
 
 This will download the course webpage and save it to a file named `index.html`
 in your current directory. This is of course a simple example of how you can use
 `curl`. You can find other options using and features in the curl manpage using
 `man curl`.
+
+By default `curl` does not follow redirects when downloading a file. To make it follow
+redirects, add `-L` to the curl command-line.
 
 #### wget
 Another popular command line tool used for downloading data is `wget`. You might
@@ -106,7 +112,9 @@ WorldCup website. The [complete
 dataset](http://ita.ee.lbl.gov/html/contrib/WorldCup.html) contains
 around 1.3 billion requests, and we will use a subset of it for this exercise.
 As a first step download the sample dataset using `curl` from
-`https://raw.github.com/amplab/datascience-sp14/master/lab1/data/wc_day6_1_log.tar.bz2` .
+`https://raw.github.com/biddata/datascience-fa14/master/lab1/data/wc_day6_1_log.tar.bz2` .
+(You will need `-L` since this redirects to a non-github.com domain for
+[security reasons](https://developer.github.com/changes/2014-04-25-user-content-security/).)
 
 The dataset has been compressed to make the download finish faster. To get the
 raw data unzip the downloaded file by running `tar -xf <filename>`. (Note: `tar`
@@ -238,8 +246,9 @@ table) instead of for analysis.
 
 For this exercise, we will be working with one such example.  Download the file
 worldcup.txt from
-`https://raw.github.com/amplab/datascience-sp14/master/lab1/data/worldcup.txt`
-(e.g., with `curl` or `wget`).  This file contains the source of a wiki table
+`https://raw.github.com/biddata/datascience-fa14/master/lab1/data/worldcup.txt`
+(e.g., with `curl` or `wget`).  This file contains the source of a
+[wiki table](https://en.wikipedia.org/wiki/FIFA_World_Cup#Teams_reaching_the_top_four)
 listing top finishers in the soccer (football?) World Cup since 1938.
 
 The goal of this exercise is to transform the World Cup data file into a clean,
@@ -262,9 +271,14 @@ a string.  Hopefully, you already have some familiarity with regex, but if not
 at least you get to experience [this](https://xkcd.com/208/) today.
 
 We have prepared a short introduction to [regular expressions](
-https://github.com/amplab/datascience-sp14/blob/master/lab1/regex.md) that
+https://github.com/biddata/datascience-fa14/blob/master/lab1/regex.md) that
 might be useful if you want a quick overview. More detail is easy to find online, for
 example, in the [Awk Manual](http://www.staff.science.uu.nl/~oostr102/docs/nawk/nawk_46.html).
+
+Note that there are multiple commonly used regular expression syntaxes,
+so the regular expression syntax implemented by `awk` and `sed` may differ slightly from
+regular expressions syntax you have seen elsewhere, such as in the python library
+[`re`](https://docs.python.org/2/library/re.html).
 
 ### Removing Cruft with sed
 
@@ -416,5 +430,5 @@ ITA,1938,1
 ## Lab 1 responses
 
 Finally we have a few questions for you based on the above exercises. Fill out
-your responses at http://goo.gl/VPhVGW .
+your responses [here](https://docs.google.com/a/berkeley.edu/forms/d/1YIAinKy7FfOU7oDyg1z0JCBJqDR94WuM2Yzz59fRjKo/viewform).
 

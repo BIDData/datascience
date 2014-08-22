@@ -39,4 +39,3 @@ we will see with `sed` and `awk`, regular expressions are often evaluated line
 by line over a file, and in these instances `^` and `$` refer to the start and
 end of the line.
 
-
