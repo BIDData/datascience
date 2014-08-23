@@ -17,33 +17,29 @@ We'll be working with a dataset that contains a record of natural disasters worl
 
 On your VM, go [here](http://www.infochimps.com/datasets/disasters-worldwide-from-1900-2008) and download and unzip the dataset to a new folder in your home directory, called "datasets". If you download with Firefox, the file will be saved to ~/Downloads. When your'e done, you should have a directory that looks something like this.
 
-    saasbook@saasbook:~/datasets/infochimps_dataset_12691_download_16174$ ls -altr
+    datascience@datascience:~/datasets/infochimps_dataset_12691_download_16174$ ls -altr
     total 1644
-    -rw------- 1 saasbook saasbook    3730 2010-02-09 14:50 SCHEMA.txt
-    -rw-r--r-- 1 saasbook saasbook     908 2010-02-09 14:50 README-infochimps
-    -rw-r--r-- 1 saasbook saasbook    7821 2010-02-09 14:50 infochimps_dataset_12691_download_16174.icss.yaml
-    -rw------- 1 saasbook saasbook 1656312 2010-02-09 14:50 emdata.tsv
-    drwxrwxr-x 3 saasbook saasbook    4096 2014-02-23 17:18 ..
-    drwxrwxr-x 2 saasbook saasbook    4096 2014-02-23 17:18 .
+    -rw------- 1 datascience datascience    3730 2010-02-09 14:50 SCHEMA.txt
+    -rw-r--r-- 1 datascience datascience     908 2010-02-09 14:50 README-infochimps
+    -rw-r--r-- 1 datascience datascience    7821 2010-02-09 14:50 infochimps_dataset_12691_download_16174.icss.yaml
+    -rw------- 1 datascience datascience 1656312 2010-02-09 14:50 emdata.tsv
+    drwxrwxr-x 3 datascience datascience    4096 2014-02-23 17:18 ..
+    drwxrwxr-x 2 datascience datascience    4096 2014-02-23 17:18 .
 
-## Installing OpenRefine
+## Running OpenRefine
 
 [OpenRefine](http://openrefine.org/) (formerly Google Refine) is an open source tool to automate data cleaning on small to medium datasets and works well on datasets that are up to a few hundred thousand rows.
 
-It contains several advanced features for data cleaning - some of which we'll use, but many of which we won't touch. You'll notice that the branding and filenames still say Google on them - this will change in version 2.6, which is currently in beta.
+It contains several advanced features for data cleaning - some of which we'll use, but many of which we won't touch. You'll notice that the branding and filenames still say Google on them - this will change in version 2.6, which is currently in beta. 
+Watch this [intro video](http://www.youtube.com/watch?v=B70J_H_zAWM) to an example of an OpenRefine workflow.
 
-Download OpenRefine to your VM and launch it (you'll need to install the java runtime first):
+The VM image we supplied has OpenRefine installed in `/home/datascience/refine`, you can run it using:
 
-    sudo apt-get install openjdk-7-jre-headless
-    mkdir ~/refine/
-    cd ~/refine/
-    wget https://github.com/OpenRefine/OpenRefine/releases/download/2.5/google-refine-2.5-r2407.tar.gz
-    tar zxvf google-refine-2.5-r2407.tar.gz
-    ./google-refine-2.5-r2407/refine
+    ./refine/google-refine-2.5-r2407/refine
 
-This whole process will take a few minutes, so while it's running, let's watch an [intro video](http://www.youtube.com/watch?v=B70J_H_zAWM).
+(If you want to install OpenRefine manually, see instructions in the appendix and the bottom of the lab.)
 
-Once that's done, you can open your web browser and navigate to http://127.0.0.1:3333/ to access the tool.
+After running this command in a terminal, open up a web browser and navigate to http://127.0.0.1:3333/ to access the tool.
 
 ## Importing The Dataset
 
@@ -259,3 +255,17 @@ Do you notice any patterns?
 ## Lab 3 Responses
 
 Remember to fill out your responses at http://goo.gl/fyzN4G !
+
+### Appendix: Installing OpenRefine manually
+
+To download OpenRefine manually and launch it:
+
+    mkdir ~/refine/
+    cd ~/refine/
+    wget https://github.com/OpenRefine/OpenRefine/releases/download/2.5/google-refine-2.5-r2407.tar.gz
+    tar zxvf google-refine-2.5-r2407.tar.gz
+    ./google-refine-2.5-r2407/refine
+
+This whole process will take a few minutes, 
+
+Once that's done, you can open your web browser and navigate to http://127.0.0.1:3333/ to access the tool.
