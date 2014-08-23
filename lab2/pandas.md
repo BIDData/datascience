@@ -4,8 +4,8 @@ In this lab exercise we will look at how to work with data stored in a tabular
 form and perform exploratory data analysis on it. We will be using the Python Data
 Analysis Library or [Pandas](http://pandas.pydata.org/) to do this.
 
-At the end of the exercise, remember to fill out the response form at
-http://goo.gl/FdlCwM .
+At the end of the exercise, remember to fill out the response form
+[here](https://docs.google.com/a/berkeley.edu/forms/d/1ss7inrrhktpv3yl5edimfvkyuunw_fljakyjywfoc3w/viewform).
 
 ## Introducing Pandas
 
@@ -17,9 +17,9 @@ primarily be using DataFrames and will look at operations that we can perform
 using them.
 
 Before you start, download the following file to your home directory (i.e
-`/home/saasbook`) and unzip it.
+`/home/datascience`) and untar it.
 
-    wget https://raw.github.com/amplab/datascience-sp14/master/lab2/data/wc_day6_1_sample.tar.bz2
+    wget https://raw.github.com/biddata/datascience-fa14/master/lab2/data/wc_day6_1_sample.tar.bz2
     tar -xf wc_day6_1_sample.tar.bz2
 
 After that run `ipython notebook` from your command line. This
@@ -124,7 +124,7 @@ Pandas for data analysis. To do this part of the lab we will reuse the World Cup
 soccer logs from Lab 1. However this time the input data has been sampled and
 formatted as a `csv` file that you will load first.
 
-    log_df = pd.read_csv("/home/saasbook/wc_day6_1_sample.csv",
+    log_df = pd.read_csv("/home/datascience/wc_day6_1_sample.csv",
                          names=['ClientID', 'Date', 'Time', 'URL', 'ResponseCode', 'Size'],
                          na_values=['-'])
 
@@ -282,7 +282,7 @@ plot a scatter plot that shows the hours of the day these clients sent requests.
 
 2. The log file used in the lab was from one day of the WorldCup. Lets apply our
 analysis to another day's logs. For this start with the raw log file
-`https://raw.github.com/amplab/datascience-sp14/master/lab2/data/wc_day91_1_log.tar.bz2` from
+`https://raw.github.com/biddata/datascience-fa14/master/lab2/data/wc_day91_1_log.tar.bz2` from
 github and load it as a Pandas DataFrame. Repeat the first 2 exercises with it.
 How similar or different are the results ?
 Hint: You can use UNIX command line tools from Lab 1 to first get a csv file and
@@ -290,4 +290,5 @@ then load it into Pandas.
 
 ## Lab 2 Responses
 
-Remember to fill out your responses at http://goo.gl/FdlCwM !
+Remember to fill out your responses [here](https://docs.google.com/a/berkeley.edu/forms/d/1ss7inrrhktpv3yl5edimfvkyuunw_fljakyjywfoc3w/viewform).
+
