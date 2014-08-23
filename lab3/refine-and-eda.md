@@ -9,13 +9,13 @@ Once your data is cleaned and integrated, you'll want to start the process of *a
 One good way to start an analysis is using a family of techniques collectively referred to as *Exploratory Data Analysis*.
 Once we've cleaned up our sample dataset, we'll look at a few of these techniques and see if they help suggest hypotheses we may want to test with the data.
 
-Remember, at the end of the exercise you'll need to fill out a response form at http://goo.gl/fyzN4G .
+Remember, at the end of the exercise you'll need to fill out a response form [here](https://docs.google.com/a/berkeley.edu/forms/d/1Fj6MnJnY79ibp7_jqa1QYpf5fwKf67MaUHfsvd_OzTc/viewform).
 
 ## Getting The Dataset
 
 We'll be working with a dataset that contains a record of natural disasters worldwide since 1900. It contains information about when a disaster happened, what kind of disaster, where in the world it was, and how many people were affected or killed by it, in addition to estimated cost.
 
-On your VM, go [here](http://www.infochimps.com/datasets/disasters-worldwide-from-1900-2008) and download and unzip the dataset to a new folder in your home directory, called "datasets". If you download with Firefox, the file will be saved to ~/Downloads. When your'e done, you should have a directory that looks something like this.
+On your VM, go [here](http://www.infochimps.com/datasets/disasters-worldwide-from-1900-2008) and download and unzip the dataset to a new folder in your home directory, called "datasets". If you download with Firefox, the file will be saved to ~/Downloads. When you're done, you should have a directory that looks something like this:
 
     datascience@datascience:~/datasets/infochimps_dataset_12691_download_16174$ ls -altr
     total 1644
@@ -31,11 +31,12 @@ On your VM, go [here](http://www.infochimps.com/datasets/disasters-worldwide-fro
 [OpenRefine](http://openrefine.org/) (formerly Google Refine) is an open source tool to automate data cleaning on small to medium datasets and works well on datasets that are up to a few hundred thousand rows.
 
 It contains several advanced features for data cleaning - some of which we'll use, but many of which we won't touch. You'll notice that the branding and filenames still say Google on them - this will change in version 2.6, which is currently in beta. 
-Watch this [intro video](http://www.youtube.com/watch?v=B70J_H_zAWM) to an example of an OpenRefine workflow.
+
+Watch this [intro video](http://www.youtube.com/watch?v=B70J_H_zAWM) to see an example of an OpenRefine workflow.
 
 The VM image we supplied has OpenRefine installed in `/home/datascience/refine`, you can run it using:
 
-    ./refine/google-refine-2.5-r2407/refine
+    ./refine/google-refine-2.5/refine
 
 (If you want to install OpenRefine manually, see instructions in the appendix and the bottom of the lab.)
 
@@ -70,7 +71,7 @@ Importantly, once you've selected items within a facet, any changes you make are
 OpenRefine has several facet types. Click the arrow above "Type" and select "Text Facet" from the "Facets" menu.
 
 A new facet will appear on the left - with a bunch of disease types in it. Click on a few and observe what happens in the main screen.
-When you're done with it, click "Reset" in the facet.
+When you're done with it, click "Reset" in the facet. (If you don't reset a facet, you might accidentally be filtering the dataset when you do not intend to.)
 
 Do you notice anything unusual about the items on this list? (Duplicates?)
 
@@ -120,14 +121,14 @@ But, how do we do that?
 ### GREL
 
 Luckily, OpenRefine has its own programming language for just such a task, called Google Refine Evaluation Language - or GREL.
-Thankfully, the language isn't particuarly complicated, and is pretty well described [here](http://co-synergy.com/GREL%20Quick%20Reference.pdf).
+Thankfully, the language isn't particuarly complicated and is documented [here](https://github.com/OpenRefine/OpenRefine/wiki/Google-refine-expression-language).
 Additionally, it's possible to use Jython or Clojure to do the transformation as well, but we'll stick with GREL for the next few examples.
 
 ### Cleaning Those Dates
 
-First, make sure all your facets have been reset (click "Reset All" on the left).
+First, make sure all your facets have been reset so you're working on the whole dataset ("Reset All" on the left).
 
-Now, select the arrow next to "Start", and select "Edit Cells" -> "Transform".
+Now, select the arrow next to the "Start" column, and select "Edit Cells" -> "Transform".
 Here you'll see an "Expression" input box and a preview output.
 OpenRefine lets you preview the effect of your transformations on the fly.
 
@@ -185,7 +186,7 @@ You've already seen both of these in the last class - but this time we'll go int
 ## Loading Our Cleaned Dataset
 
 In OpenRefine, export your dataset to a csv file using the "Export" button at the top right.
-If you haven't changed your project name, it will be saved to a file called `~/Downloads/emdata-tsv.csv`.
+If you haven't changed your project name, it will be saved to a file called `Downloads/emdata-tsv.csv`.
 
 Now, fire up an ipython notebook with the command `ipython notebook` from the terminal.
 
@@ -193,13 +194,16 @@ In a new notebook, import pandas and load your dataset.
 
     %matplotlib inline
     import pandas as pd
-    data = pd.read_csv("~/Downloads/emdata-tsv.csv")
+    data = pd.read_csv("/home/datascience/Downloads/emdata-tsv.csv")
     
-Next, make sure you understand the basic properties of your data - its size and shape, etc.
+Next, use the pandas interface to understand the basic properties of your data - its size and shape, etc., for example, by looking at the output of some of these commands:
 
     data.describe()
+
     data.shape
+
     data.Country.describe()
+
     data.Type.describe()
 
 ### DIY
@@ -246,7 +250,7 @@ Try this command in your notebook:
 
     _  = pd.scatter_matrix(data[['Cost','Killed','Affected','Duration']], figsize=(12,12))
 
-Here, we're plotting the relationships between Cost, Killed, Affected, and Duration across the whole dataset.
+Here, we're plotting the relationships between Cost, Killed, Affected, and Duration across the whole dataset. The diagonal of the matrix shows a histogram for each of these columns.
 Do you notice any patterns?
 
 #### DIY
@@ -254,7 +258,7 @@ Do you notice any patterns?
 
 ## Lab 3 Responses
 
-Remember to fill out your responses at http://goo.gl/fyzN4G !
+Remember to fill out your responses [here](https://docs.google.com/a/berkeley.edu/forms/d/1Fj6MnJnY79ibp7_jqa1QYpf5fwKf67MaUHfsvd_OzTc/viewform).
 
 ### Appendix: Installing OpenRefine manually
 
@@ -266,6 +270,6 @@ To download OpenRefine manually and launch it:
     tar zxvf google-refine-2.5-r2407.tar.gz
     ./google-refine-2.5-r2407/refine
 
-This whole process will take a few minutes, 
+This whole process will take a few minutes.
 
 Once that's done, you can open your web browser and navigate to http://127.0.0.1:3333/ to access the tool.
