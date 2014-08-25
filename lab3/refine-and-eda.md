@@ -250,7 +250,7 @@ Try this command in your notebook:
 
     _  = pd.scatter_matrix(data[['Cost','Killed','Affected','Duration']], figsize=(12,12))
 
-Here, we're plotting the relationships between Cost, Killed, Affected, and Duration across the whole dataset. The diagonal of the matrix shows a histogram for each of these columns.
+Here, we're plotting the relationships (as a scatter plot) between Cost, Killed, Affected, and Duration across the whole dataset. The diagonal of the matrix shows a histogram for each of these columns.
 Do you notice any patterns?
 
 #### DIY
