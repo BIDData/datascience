@@ -2,10 +2,10 @@
 
 In this lab you will use UNIX command line utilities to do some data cleaning
 and basic analysis. At the end of the exercise, remember to fill out the
-response form [here](https://docs.google.com/a/berkeley.edu/forms/d/1YIAinKy7FfOU7oDyg1z0JCBJqDR94WuM2Yzz59fRjKo/viewform).
+response form.
 
 For all the utilities mentioned in this lab, you can read its manual by
-running `man _command-name_` from a terminal.
+running <code>man <em>command-name</em></code> from a terminal.
 
 ## Section 1: File System Analytics
 
@@ -126,7 +126,7 @@ wc_day6_1.log`. This will show you the first few lines of the file and you can
 page through the file using the arrow keys. You will notice that each hit or
 access to the website is logged as in a new line in the log file. The format of
 each line is in the [Common Log File
-Format](https://en.wikipedia.org/wiki/Common_Log_Format) and this format is used
+Format](https://en.wikipedia.org/wiki/Common_Log_Format) and this format is supported
 by most HTTP servers. In this case the data has been annonymized and lets take a
 look at one line from the file to explain each field
 
@@ -171,7 +171,7 @@ it to just `html` pages, you can use a regular expression
     2776
 
 We can also prune the dataset to only look at interesting parts of it. For
-example we can just look at the first 50 URLs and their sizes using the `head`
+example we can just look at the first 50 URIs and their sizes using the `head`
 and `cut` command.
 
     head -50 wc_day6_1.log | cut -d ' ' -f 7,10
@@ -180,12 +180,12 @@ In the above command the `-d` flag denotes what delimiter to use and `-f` stats
 what fields should be selected from the line. Try out different delimiter and
 field values to see how `cut` works.
 
-Finally we can see how many unique URLs are there in the first 50 visits. To do
+Finally we can see how many unique URIs are there in the first 50 visits. To do
 this we could run something like
 
     head -50 wc_day6_1.log | cut -d ' ' -f 7 | sort | uniq | wc -l
 
-Here we use the tool `uniq` to only count unique URLs. Note that the input to
+Here we use the tool `uniq` to only count unique URIs. Note that the input to
 `uniq` should be sorted, so we use `sort` before calling `uniq`. The `uniq` tool
 can also be used to count how many times an item occurs by passing it the `-c` flag.
 For example if we run the same command as above but with `uniq -c` we'll get
@@ -202,30 +202,134 @@ For example if we run the same command as above but with `uniq -c` we'll get
       1 /images/team_hm_caf.gif
       1 /images/team_hm_concacaf.gif
 
-This shows that `/images/home_intro.anim.gif` occured twice in the first 50 URLs.
+This shows that `/images/home_intro.anim.gif` occured twice in the first 50 URIs.
 
 ### Exercises
 
 Now use the above tools to answer some analysis questions
 
-2.1 What are the 5 most frequently visited URLs ?
+2.1 What are the 5 most frequently visited URIs?
 
-2.2 Print the top 10 URLs which did not have return code 200.
+2.2 Print the top 10 URIs which did not have return code 200.
 
 2.3 Print the number of requests that had HTTP return code 404. Next break down
 number of 404 requests by date (i.e how many on 30th April and how many on 1st
 May).
 
+
+## Section 3: Data transformation with sed
+
+While the data in the log file is probvided in a standardized format, most tools we used
+are not intended specifically for analyzing web page logs. In this exercise, we will
+translate the log file into CSV (comma-separated values) format with fields:
+
+1.   Client ID
+2.   Date (YYYY-MM-DD format)
+3.   Time (HH:MM:SS format)
+4.   URI
+5.   Response code
+6.   Response size
+7.   Request method (GET, POST, etc.)
+
+### Regular expressions
+
+To do this, we will take advantage of _regular expressions_.
+We have prepared a short introduction to
+[regular expressions](https://bcourses.berkeley.edu/courses/1267848/pages/regex) that
+might be useful if you want a quick overview. More detail is easy to find online, for
+example, in the [GNU sed Manual](https://www.gnu.org/software/sed/manual/sed.html#Regular-Expressions).
+
+### Regular expression substituion in esd
+
+`sed` (short for "Stream EDitor") is a tool for modifying and extracting data from
+text files. Many sed commands were discussed in this week's reading, but, by far,
+the most common sed command is regular expression substitution. You can run a substitute
+command as follows:
+
+```
+cat in.txt | sed 's/regexPattern/replacementString/flags' > out.txt'
+```
+
+The flags are described in `man sed`, but the most notable flag is `g`, which causes sed to
+find and replace all instances of the pattern rather than the first one.
+
+For example,
+
+```
+echo "The quick brown fox jumps over the lazy dog." | sed 's/[tT]he [a-z]*/The yellow/'
+```
+
+matches only <em>The quick</em>, resulting in
+<code><em>The yellow</em> brown fox jumps over the lazy dog.</code>, while
+
+```
+echo "The quick brown fox jumps over the lazy dog." | sed 's/[tT]he [a-z]*/The yellow/g'
+```
+
+matches both <em>The quick</em> and <em>the lazy</em> and results in
+<code><em>The yellow</em> brown fox jumps over <em>The yellow</em> dog.</code>
+
+
+### Removing cruft in sed
+
+As a first step toward converting it to CSV format, let's start by removing cruft from dates in
+the log file. Each date is surrounded by a `[`
+and ` +0000]`. We can remove the ` +0000]`s using `sed 's/ +0000]//'`. To try this
+on the first ten lines of the log file, use:
+
+```
+head wc_day6_1.log | sed 's/ +0000]//'
+```
+
+Similarly, we can remove `[` using `s/\[//`. (We need the backslash before the `[` to prevent
+sed from treating it as a special character in its regular expression syntax.) We can combine this
+our previous cleaning using:
+
+```
+head wc_day6_1.log | sed 's/ +0000]//' | sed 's/\[//'
+```
+
+or, only invoking `sed` once:
+
+```
+head wc_day6_1.log | sed 's/ +0000]//; s/\[//'
+```
+
+### Backreferences in sed
+`sed` supports _backreferences_ in substitutions, allowing you to include part of the matched text
+in the replacement string. To use backreferences, make a _capturing group_ by surrounding part of
+the matched text with `\(` and `\)`; then in the replacement text, use `\1` to place the text of
+the first group, `\2` for the second and so on. For example:
+
+```
+echo "The quick brown fox jumps over the lazy dog." | sed 's/\([Tt]he\) \([a-z]*\)/\1 "\2"/g'
+```
+
+results in `The "quick" brown fox jumps over the "lazy" dog.`
+
+
+### Task
+3.2 Use `sed` to convert the log file into the CSV format mentioned above. Note the transformation
+of dates.
+
+3.3 Check (e.g. with `cut` and `grep` or with a `sed` script) that each line of your
+converted log file actually contains 7 fields, each of which is never empty.
+
+# Response form
+
+Fill out the questions [here](https://bcourses.berkeley.edu/courses/1267848/quizzes/1755407).
+
+
 ## Challenge Exercises (Optional)
 
-2.4. Print the number of HTTP requests that had return code 404 in each hour of
+4.1. Print the number of HTTP requests that had return code 404 in each hour of
    the day.
    
-2.5. Break down the number of HTTP requests that did not have a 200 return code by date
+4.2. Break down the number of HTTP requests that did not have a 200 return code by date
    (i.e. how many responses were 304, 404, etc. on each day).
 
-
-## Section 3: Data cleaning and transformation with sed, awk
+<!--
+## Section 3: Data cleaning and transformation with sed
 
 In this exercise we will learn how to use command line tools to transform
 structured data into a clean CSV format.
@@ -431,4 +535,4 @@ ITA,1938,1
 
 Finally we have a few questions for you based on the above exercises. Fill out
 your responses [here](https://docs.google.com/a/berkeley.edu/forms/d/1YIAinKy7FfOU7oDyg1z0JCBJqDR94WuM2Yzz59fRjKo/viewform).
-
+-->
