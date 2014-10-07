@@ -54,7 +54,7 @@ the basic data frame operations.
 
 #### Reading in data to create a dataframe.
 R provides helper functions to read in a csv and other tabular data files. To get an idea of how they work
-download nyt1-sample.csv from https://github.com/BIDData/datascience-fa14/raw/master/lab6/nyt1-sample.csv
+download nyt1-sample.csv from https://github.com/BIDData/datascience-fa14/raw/master/r-lab/nyt1-sample.csv
 and read it in using the `read.csv` command.
 
 ```
