@@ -5,11 +5,6 @@ tool for data analysis and we will use R to do some basic linear regression.
 Many of the data frame features, plotting routines and machine learning
 algorithms that we use in Pandas or scikit-learn are also supported in R.
 
-> Before you start, make sure you install R. You can do this in your VM by running
-> `sudo apt-get -y install r-base`
-
-Remember to fill out the response form at http://goo.gl/7kUpAb !
-
 ## Introducing R
 
 R is both a programming language and a software environment and is primarily targetted
@@ -59,7 +54,8 @@ the basic data frame operations.
 
 #### Reading in data to create a dataframe.
 R provides helper functions to read in a csv and other tabular data files. To get an idea of how they work
-read in the `nyt1-sample.csv` provided using the `read.csv` command.
+download nyt1-sample.csv from https://github.com/BIDData/datascience-fa14/raw/master/lab6/nyt1-sample.csv
+and read it in using the `read.csv` command.
 
 ```
    nyt1 <- read.csv("./nyt1-sample.csv")
@@ -312,4 +308,7 @@ linear regression. That is not the case as we are just treating x^2 as a new var
 * Plot the residuals vs. fitted values and qqnorm for lm_sq and lm2. What are some
 of the differences ?
 
-Remember to fill out the response form at http://goo.gl/7kUpAb !
+
+## Responses
+
+When you're done, remember to fill out the responses on BCourses.
